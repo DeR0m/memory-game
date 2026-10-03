@@ -8,3 +8,39 @@ body {
     background-color: rgba(33, 46, 59, 1);
     color: rgba(250, 250, 255, 1);
 }
+
+.app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.header__btn {
+    padding: 10px;
+    border-radius: 100px;
+    border: 2px dotted rgba(250, 250, 255, 1);
+    background-color: transparent;
+    color: rgba(250, 250, 255, 1);
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.header__btn:hover {
+    background-color: rgb(49, 68, 87);
+}
