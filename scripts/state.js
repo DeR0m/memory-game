@@ -2,23 +2,24 @@ let state = null;
 const listeners = [];
 
 export function initState(initial) {
-  state = initial;
-  notify();
+    state = initial;
+    notify();
 }
 
 export function getState() {
-  return state;
+    if (!state) throw new Error('State NOT initialized. Call initState() first')
+    return state;
 }
 
 export function setState(patch) {
-  state = { ...state, ...patch };
-  notify();
+    state = { ...state, ...patch };
+    notify();
 }
 
 export function subscribe(fn) {
-  listeners.push(fn);
+    listeners.push(fn);
 }
 
 function notify() {
-  listeners.forEach((fn) => fn(state));
+    listeners.forEach((fn) => fn(state));
 }
