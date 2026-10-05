@@ -1,6 +1,9 @@
 import { createElement, clear, mount } from './dom.js';
 import { Header } from './components/header.js';
+import { Counters } from './components/counters.js';
 import { Board } from './components/board.js';
+import { openModal, closeModal } from './modal.js';
+import { loadResults, saveResult, formatDate } from './storage.js';
 import { createDeck, shuffle, TOTAL_PAIRS } from './game.js';
 import { initState, getState, setState, subscribe } from './state.js';
 
@@ -26,6 +29,51 @@ initState(createInitialState());
 subscribe(render);
 
 render();
+
+function showWinModal(moves) {
+    openModal({
+        title: 'Победа!',
+        content: [
+            createElement('p', {}, `Вы нашли все пары за ${moves} ходов.`),
+            createElement('div', { class: 'modal__actions' },
+                createElement('button', {
+                    class: 'modal__button',
+                    onClick: () => {
+                        closeModal();
+                        handleNewGame();
+                    },
+                }, 'Новая игра'),
+                createElement('button', {
+                    class: 'modal__button',
+                    onClick: () => closeModal(),
+                }, 'Закрыть'),
+            ),
+        ],
+    });
+}
+
+function showLeaderboardModal() {
+    const results = loadResults();
+    if (results.length === 0) {
+        return createElement('p', { class: 'leaderboard__empty' }, 'Пока нет результатов');
+    }
+    return createElement('ol', { class: 'leaderboard' },
+        results.map((result, index) =>
+            createElement('li', { class: 'leaderboard__item' },
+                createElement('span', { class: 'leaderboard__place' }, `${index + 1}.`),
+                createElement('span', { class: 'leaderboard__moves' }, `${result.moves} ходов`),
+                createElement('span', { class: 'leaderboard__date' }, formatDate(result.date)),
+            )
+        )
+    );
+}
+
+function handleLeaderboard() {
+    openModal({
+        title: 'Таблица лидеров',
+        content: showLeaderboardModal(),
+    });
+}
 
 function handleCardClick(id) {
     const { cards, isLocked, isGameOver, firstCard, moves, matchedPairs } = getState();
@@ -67,7 +115,8 @@ function handleCardClick(id) {
         });
 
         if (isGameOver) {
-            console.log('Победа! Ходов:', moves + 1);
+            saveResult(moves + 1);
+            showWinModal(moves + 1);
         }
         return;
     }
@@ -104,12 +153,17 @@ function handleCardClick(id) {
 }
 
 function render() {
-    const { cards } = getState();
+    const { cards, moves, matchedPairs } = getState();
     clear(root);
     mount(root,
         Header({
             onNewGame: handleNewGame,
-            onLeaderboard: () => console.log('leaderboard'),
+            onLeaderboard: handleLeaderboard,
+        }),
+        Counters({
+            moves,
+            matchedPairs,
+            totalPairs: TOTAL_PAIRS,
         }),
         Board({
             cards,
