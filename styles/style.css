@@ -1,0 +1,176 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background-color: rgba(33, 46, 59, 1);
+    color: #fafaff;
+}
+
+.app {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 24px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+.header__title {
+    font-size: 3rem;
+    margin: 0;
+}
+
+.header__actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    list-style-type: none;
+    padding: 0;
+}
+
+.header__btn {
+    padding: 15px;
+    border-radius: 100px;
+    border: 2px dotted #fafaff;
+    background-color: transparent;
+    color: #fafaff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.header__btn:hover {
+    background-color: rgb(49, 68, 87);
+}
+
+.counters {
+    display: flex;
+    margin: 20px 0;
+    justify-content: space-around;
+}
+
+.counters__item {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.board {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    max-width: 500px;
+    margin: 20px auto;
+}
+
+.card {
+    aspect-ratio: 1;
+    font-size: 2rem;
+    cursor: pointer;
+    border: 2px solid #333;
+    border-radius: 8px;
+    background-color: #fafaff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s;
+}
+
+.card:hover {
+    background-color: #f0f0f0c2;
+}
+
+.card--flipped {
+    background-color: #fafaff;
+}
+
+.card--matched {
+    background-color: #2a5c4a;
+    border-color: #2a8;
+    cursor: default;
+}
+
+.modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.modal {
+    background-color: rgb(49, 68, 87);
+    padding: 24px;
+    border-radius: 12px;
+    max-width: 400px;
+    width: 90%;
+}
+
+.modal__title {
+    margin: 0 0 16px;
+    font-size: 32px;
+}
+
+.modal p {
+    font-size: 20px;
+}
+
+.modal__actions {
+    display: flex;
+    gap: 20px;
+}
+
+.modal__button {
+    padding: 15px;
+    border-radius: 100px;
+    border: 2px dotted #fafaff;
+    background-color: transparent;
+    color: #fafaff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.5s ease-in-out;
+}
+
+.modal__button:hover {
+    background-color: rgb(49, 68, 87);
+}
+
+.leaderboard {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.leaderboard__item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #fafaff;
+}
+
+.leaderboard__item:last-child {
+    border-bottom: none;
+}
+
+.leaderboard__empty {
+    text-align: center;
+    color: #ccc;
+    padding: 20px;
+    margin: 0;
+}
+
+.leaderboard__place {
+    min-width: 24px;
+    color: #ccc;
+}
